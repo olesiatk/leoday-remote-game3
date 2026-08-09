@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 
 const MAX_WRONG = 6;
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-const QUESTIONS = [
+interface Question {
+  hint: string;
+  answer: string;
+}
+
+const QUESTIONS: Question[] = [
   { hint: 'Version control system created by Linus Torvalds', answer: 'GIT' },
   { hint: 'Containerization platform with a whale logo', answer: 'DOCKER' },
   { hint: 'Markup language used to structure web pages', answer: 'HTML' },
@@ -16,8 +21,17 @@ const QUESTIONS = [
   { hint: 'Popular code editor made by Microsoft (abbr.)', answer: 'VSCODE' },
 ];
 
+interface BugPosition {
+  id: string;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  transform?: string;
+}
+
 // Bug positions ring the word box like a perimeter instead of a gallows drawing.
-const BUG_POSITIONS = [
+const BUG_POSITIONS: BugPosition[] = [
   { id: 'top-left', top: '-14px', left: '-14px' },
   { id: 'top-right', top: '-14px', right: '-14px' },
   { id: 'mid-left', top: '50%', left: '-14px', transform: 'translateY(-50%)' },
@@ -26,7 +40,16 @@ const BUG_POSITIONS = [
   { id: 'bottom-right', bottom: '-14px', right: '-14px' },
 ];
 
-function pickQuestionIndex(excludeIndex) {
+type GameStatus = 'playing' | 'won' | 'lost';
+
+interface GameState {
+  questionIndex: number;
+  guessed: string[];
+  wrongCount: number;
+  status: GameStatus;
+}
+
+function pickQuestionIndex(excludeIndex: number): number {
   if (QUESTIONS.length === 1) return 0;
   let index = excludeIndex;
   while (index === excludeIndex) {
@@ -35,23 +58,23 @@ function pickQuestionIndex(excludeIndex) {
   return index;
 }
 
-function initialState() {
+function initialState(): GameState {
   return { questionIndex: 0, guessed: [], wrongCount: 0, status: 'playing' };
 }
 
 export default function Hangman() {
-  const [state, setState] = useState(initialState());
+  const [state, setState] = useState<GameState>(initialState());
   const question = QUESTIONS[state.questionIndex];
   const answerLetters = question.answer.split('');
 
-  const guess = (letter) => {
+  const guess = (letter: string) => {
     if (state.status !== 'playing' || state.guessed.includes(letter)) return;
 
     const nextGuessed = [...state.guessed, letter];
     const correct = answerLetters.includes(letter);
     const wrongCount = correct ? state.wrongCount : state.wrongCount + 1;
     const solved = answerLetters.every((ch) => nextGuessed.includes(ch));
-    let status = 'playing';
+    let status: GameStatus = 'playing';
     if (solved) status = 'won';
     else if (wrongCount >= MAX_WRONG) status = 'lost';
 
@@ -131,7 +154,7 @@ export default function Hangman() {
   );
 }
 
-const wordBoxStyle = {
+const wordBoxStyle: CSSProperties = {
   position: 'relative',
   display: 'inline-flex',
   alignItems: 'center',
@@ -142,7 +165,7 @@ const wordBoxStyle = {
   borderRadius: '8px',
 };
 
-const keyStyle = {
+const keyStyle: CSSProperties = {
   width: 22,
   height: 22,
   fontSize: '10px',
@@ -154,10 +177,10 @@ const keyStyle = {
   padding: 0,
 };
 
-const correctKeyStyle = { ...keyStyle, background: '#238636', color: '#ffffff', cursor: 'default' };
-const wrongKeyStyle = { ...keyStyle, background: '#8b1a1a', color: '#ffffff', cursor: 'default' };
+const correctKeyStyle: CSSProperties = { ...keyStyle, background: '#238636', color: '#ffffff', cursor: 'default' };
+const wrongKeyStyle: CSSProperties = { ...keyStyle, background: '#8b1a1a', color: '#ffffff', cursor: 'default' };
 
-const winOverlayStyle = {
+const winOverlayStyle: CSSProperties = {
   marginTop: '12px',
   padding: '14px',
   background: 'rgba(87, 177, 45, 0.15)',
@@ -166,7 +189,7 @@ const winOverlayStyle = {
   textAlign: 'center',
 };
 
-const loseOverlayStyle = {
+const loseOverlayStyle: CSSProperties = {
   marginTop: '12px',
   padding: '14px',
   background: 'rgba(248, 81, 73, 0.15)',
@@ -175,7 +198,7 @@ const loseOverlayStyle = {
   textAlign: 'center',
 };
 
-const btnStyle = {
+const btnStyle: CSSProperties = {
   background: '#57B12D',
   color: '#0d1117',
   border: 'none',
