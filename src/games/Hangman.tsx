@@ -105,7 +105,7 @@ export default function Hangman() {
             🐛
           </span>
         ))}
-        <span style={{ letterSpacing: '4px', fontSize: '18px', fontWeight: 700 }}>
+        <span style={{ letterSpacing: '4px', fontSize: '18px', fontWeight: 700, color: "white" }}>
           {answerLetters
             .map((ch) => (state.guessed.includes(ch) || state.status === 'lost' ? ch : '_'))
             .join(' ')}
