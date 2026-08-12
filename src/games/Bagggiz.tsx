@@ -21,25 +21,6 @@ const QUESTIONS: Question[] = [
   { hint: 'Popular code editor made by Microsoft (abbr.)', answer: 'VSCODE' },
 ];
 
-interface BugPosition {
-  id: string;
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-  transform?: string;
-}
-
-// Bug positions ring the word box like a perimeter instead of a gallows drawing.
-const BUG_POSITIONS: BugPosition[] = [
-  { id: 'top-left', top: '-14px', left: '-14px' },
-  { id: 'top-right', top: '-14px', right: '-14px' },
-  { id: 'mid-left', top: '50%', left: '-14px', transform: 'translateY(-50%)' },
-  { id: 'mid-right', top: '50%', right: '-14px', transform: 'translateY(-50%)' },
-  { id: 'bottom-left', bottom: '-14px', left: '-14px' },
-  { id: 'bottom-right', bottom: '-14px', right: '-14px' },
-];
-
 type GameStatus = 'playing' | 'won' | 'lost';
 
 interface GameState {
@@ -62,7 +43,7 @@ function initialState(): GameState {
   return { questionIndex: 0, guessed: [], wrongCount: 0, status: 'playing' };
 }
 
-export default function Hangman() {
+export default function Bagggiz() {
   const [state, setState] = useState<GameState>(initialState());
   const question = QUESTIONS[state.questionIndex];
   const answerLetters = question.answer.split('');
@@ -87,29 +68,26 @@ export default function Hangman() {
 
   return (
     <div style={{ fontFamily: "'Source Sans Pro', sans-serif" }}>
-      <h3 style={{ color: '#57B12D', margin: '0 0 6px 0', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, textTransform: 'uppercase' }}>🐛 IT Hangman</h3>
+      <h3 style={{ color: '#57B12D', margin: '0 0 6px 0', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, textTransform: 'uppercase' }}>🐞 IT Bagggiz</h3>
       <p style={{ color: '#8b949e', fontSize: '12px', margin: '0 0 12px 0' }}>{question.hint}</p>
 
       <div style={wordBoxStyle}>
-        {BUG_POSITIONS.map(({ id, ...pos }, i) => (
-          <span
-            key={id}
-            style={{
-              position: 'absolute',
-              fontSize: '16px',
-              opacity: i < state.wrongCount ? 1 : 0,
-              transition: 'opacity 0.2s ease',
-              ...pos,
-            }}
-          >
-            🐛
-          </span>
-        ))}
         <span style={{ letterSpacing: '4px', fontSize: '18px', fontWeight: 700, color: "white" }}>
           {answerLetters
             .map((ch) => (state.guessed.includes(ch) || state.status === 'lost' ? ch : '_'))
             .join(' ')}
         </span>
+      </div>
+
+      <div style={bugRowStyle}>
+        {Array.from({ length: MAX_WRONG }).map((_, i) => {
+          const active = i < state.wrongCount;
+          return (
+            <div key={i} style={active ? bugCellActiveStyle : bugCellStyle}>
+              {active && <span style={{ fontSize: '14px' }}>🐞</span>}
+            </div>
+          );
+        })}
       </div>
 
       <p style={{ color: '#8b949e', fontSize: '12px', margin: '10px 0' }}>
@@ -145,7 +123,7 @@ export default function Hangman() {
 
       {state.status === 'lost' && (
         <div style={loseOverlayStyle}>
-          <div style={{ fontSize: '36px' }}>🐛💀</div>
+          <div style={{ fontSize: '36px' }}>🐞💀</div>
           <p style={{ margin: '6px 0', fontWeight: 700 }}>The bugs got you! Answer: {question.answer}</p>
           <button style={btnStyle} onClick={nextWord}>Try another word</button>
         </div>
@@ -155,7 +133,6 @@ export default function Hangman() {
 }
 
 const wordBoxStyle: CSSProperties = {
-  position: 'relative',
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -163,6 +140,30 @@ const wordBoxStyle: CSSProperties = {
   background: '#0d1117',
   border: '1px solid #30363d',
   borderRadius: '8px',
+};
+
+const bugRowStyle: CSSProperties = {
+  display: 'flex',
+  gap: '6px',
+  marginTop: '8px',
+};
+
+const bugCellStyle: CSSProperties = {
+  width: 26,
+  height: 26,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: '#0d1117',
+  border: '1px solid #30363d',
+  borderRadius: '4px',
+  transition: 'border-color 0.2s ease',
+};
+
+const bugCellActiveStyle: CSSProperties = {
+  ...bugCellStyle,
+  border: '1px solid #f85149',
+  boxShadow: '0 0 0 1px rgba(248, 81, 73, 0.5)',
 };
 
 const keyStyle: CSSProperties = {

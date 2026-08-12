@@ -13,7 +13,7 @@ export default defineConfig({
     federation({
       name: 'remoteGame3',
       filename: 'remoteEntry.js',
-      exposes: { './Game': './src/games/Hangman.tsx' },
+      exposes: { './Game': './src/games/Bagggiz.tsx' },
       shared: ['react', 'react-dom']
     })
   ],
