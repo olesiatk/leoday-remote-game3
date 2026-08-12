@@ -19,6 +19,76 @@ const QUESTIONS: Question[] = [
   { hint: 'Temporary storage that speeds up repeated data access', answer: 'CACHE' },
   { hint: 'Process of finding and fixing errors in code', answer: 'DEBUG' },
   { hint: 'Popular code editor made by Microsoft (abbr.)', answer: 'VSCODE' },
+  { hint: 'High-level programming language named after a British comedy group', answer: 'PYTHON' },
+  { hint: 'Object-oriented language known for "write once, run anywhere"', answer: 'JAVA' },
+  { hint: 'Programming language that powers the Rails framework', answer: 'RUBY' },
+  { hint: "Apple's modern programming language for iOS development", answer: 'SWIFT' },
+  { hint: 'JetBrains language now preferred for Android development', answer: 'KOTLIN' },
+  { hint: 'Server-side scripting language for web development (abbr.)', answer: 'PHP' },
+  { hint: 'Language used to query relational databases (abbr.)', answer: 'SQL' },
+  { hint: 'Lightweight data-interchange format (abbr.)', answer: 'JSON' },
+  { hint: 'Markup language that predates wide JSON adoption (abbr.)', answer: 'XML' },
+  { hint: 'Human-readable format often used for config files', answer: 'YAML' },
+  { hint: "JavaScript runtime built on Chrome's V8 engine", answer: 'NODE' },
+  { hint: 'Default package manager for Node.js (abbr.)', answer: 'NPM' },
+  { hint: 'Progressive JavaScript framework for building UIs', answer: 'VUE' },
+  { hint: "Google's TypeScript-based web framework", answer: 'ANGULAR' },
+  { hint: 'Popular JavaScript module bundler', answer: 'WEBPACK' },
+  { hint: 'JavaScript compiler that transpiles modern syntax', answer: 'BABEL' },
+  { hint: 'Predictable state container for JavaScript apps', answer: 'REDUX' },
+  { hint: 'Query language for APIs developed by Facebook', answer: 'GRAPHQL' },
+  { hint: 'Architectural style for designing web APIs (abbr.)', answer: 'REST' },
+  { hint: 'Computing resources delivered over the internet', answer: 'CLOUD' },
+  { hint: "Amazon's cloud computing platform (abbr.)", answer: 'AWS' },
+  { hint: "Microsoft's cloud computing platform", answer: 'AZURE' },
+  { hint: 'Popular open-source automation server', answer: 'JENKINS' },
+  { hint: 'Web-based hosting service for Git repositories', answer: 'GITHUB' },
+  { hint: 'DevOps platform with built-in CI/CD pipelines', answer: 'GITLAB' },
+  { hint: 'Infrastructure as code tool made by HashiCorp', answer: 'TERRAFORM' },
+  { hint: 'Agentless automation and configuration management tool', answer: 'ANSIBLE' },
+  { hint: 'High-performance web server and reverse proxy', answer: 'NGINX' },
+  { hint: 'Widely used open-source web server software', answer: 'APACHE' },
+  { hint: 'Popular Linux distribution sponsored by Canonical', answer: 'UBUNTU' },
+  { hint: 'Core part of an operating system', answer: 'KERNEL' },
+  { hint: 'Command-line interpreter for interacting with an OS', answer: 'SHELL' },
+  { hint: 'Common Unix shell and command language (abbr.)', answer: 'BASH' },
+  { hint: 'Pattern used to match text (abbr. for regular expression)', answer: 'REGEX' },
+  { hint: 'Ordered collection of elements stored under one variable', answer: 'ARRAY' },
+  { hint: 'LIFO data structure for storing elements', answer: 'STACK' },
+  { hint: 'FIFO data structure for storing elements', answer: 'QUEUE' },
+  { hint: 'Piece of data used for authentication, e.g. a JWT', answer: 'TOKEN' },
+  { hint: 'Open standard for delegating access without sharing passwords', answer: 'OAUTH' },
+  { hint: 'Server that acts as an intermediary for requests', answer: 'PROXY' },
+  { hint: 'Document Object Model (abbr.)', answer: 'DOM' },
+  { hint: 'CSS preprocessor with nested syntax and variables', answer: 'SASS' },
+  { hint: 'CSS preprocessor language influenced by Sass', answer: 'LESS' },
+  { hint: 'CSS layout model for one-dimensional layouts', answer: 'FLEXBOX' },
+  { hint: 'CSS layout system for two-dimensional layouts', answer: 'GRID' },
+  { hint: 'Meta tag controlling how a page renders on mobile', answer: 'VIEWPORT' },
+  { hint: 'Design approach that adapts a layout to screen size', answer: 'RESPONSIVE' },
+  { hint: 'Software used to access and render web pages', answer: 'BROWSER' },
+  { hint: 'HTML element for drawing graphics via JavaScript', answer: 'CANVAS' },
+  { hint: 'Vector image format for the web (abbr.)', answer: 'SVG' },
+  { hint: 'Small piece of data stored by the browser', answer: 'COOKIE' },
+  { hint: 'Browser API for persisting key-value data client-side', answer: 'STORAGE' },
+  { hint: 'Modern JavaScript API for making HTTP requests', answer: 'FETCH' },
+  { hint: 'Technique for updating a page without a full reload (abbr.)', answer: 'AJAX' },
+  { hint: 'JS object representing the eventual completion of an async task', answer: 'PROMISE' },
+  { hint: 'Function that remembers its lexical scope', answer: 'CLOSURE' },
+  { hint: 'React feature like useState or useEffect', answer: 'HOOK' },
+  { hint: 'Data passed from parent to child component in React', answer: 'PROPS' },
+  { hint: 'Reusable building block of a UI', answer: 'COMPONENT' },
+  { hint: 'Library that manages navigation in a single-page app', answer: 'ROUTER' },
+  { hint: 'Output file combining multiple modules for the browser', answer: 'BUNDLE' },
+  { hint: 'Process of shrinking code by removing whitespace', answer: 'MINIFY' },
+  { hint: 'Describes HTML tags that convey meaning, like <header>', answer: 'SEMANTIC' },
+  { hint: 'CSS property for smoothly animating changes', answer: 'TRANSITION' },
+  { hint: 'CSS pattern used to target elements', answer: 'SELECTOR' },
+  { hint: 'Combined image file used to reduce HTTP requests', answer: 'SPRITE' },
+  { hint: 'Small icon shown in a browser tab', answer: 'FAVICON' },
+  { hint: 'HTML element for embedding another page', answer: 'IFRAME' },
+  { hint: 'Common UI component for site navigation', answer: 'NAVBAR' },
+  { hint: 'Protocol for full-duplex communication over a single connection', answer: 'WEBSOCKET' },
 ];
 
 type GameStatus = 'playing' | 'won' | 'lost';
@@ -67,12 +137,12 @@ export default function Bagggiz() {
   };
 
   return (
-    <div style={{ fontFamily: "'Source Sans Pro', sans-serif" }}>
+    <div style={{ maxWidth: '100%', boxSizing: 'border-box', fontFamily: "'Source Sans Pro', sans-serif" }}>
       <h3 style={{ color: '#57B12D', margin: '0 0 6px 0', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, textTransform: 'uppercase' }}>🐞 IT Bagggiz</h3>
       <p style={{ color: '#8b949e', fontSize: '12px', margin: '0 0 12px 0' }}>{question.hint}</p>
 
       <div style={wordBoxStyle}>
-        <span style={{ letterSpacing: '4px', fontSize: '18px', fontWeight: 700, color: "white" }}>
+        <span style={{ letterSpacing: '2px', fontSize: '16px', fontWeight: 700, color: "white" }}>
           {answerLetters
             .map((ch) => (state.guessed.includes(ch) || state.status === 'lost' ? ch : '_'))
             .join(' ')}
@@ -94,7 +164,7 @@ export default function Bagggiz() {
         Bugs closing in: {state.wrongCount}/{MAX_WRONG}
       </p>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', maxWidth: 280 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', maxWidth: '100%' }}>
         {ALPHABET.map((letter) => {
           const used = state.guessed.includes(letter);
           const correct = used && answerLetters.includes(letter);
@@ -133,10 +203,13 @@ export default function Bagggiz() {
 }
 
 const wordBoxStyle: CSSProperties = {
-  display: 'inline-flex',
+  display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '16px 22px',
+  maxWidth: '100%',
+  boxSizing: 'border-box',
+  overflowX: 'auto',
+  padding: '12px 10px',
   background: '#0d1117',
   border: '1px solid #30363d',
   borderRadius: '8px',
